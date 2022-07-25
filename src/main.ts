@@ -1,38 +1,33 @@
-import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
+import { connectToDatabase } from './database/database';
 
 dotenv.config();
 const app = express();
 app.use(express.json());
-app.use(
-  cors({
-    origin: [
-      'http://localhost:4000',
-      'https://localhost:4000',
-      'http://84.166.18.6:4000'
-    ],
-    credentials: true
-  })
-);
 
-// connectToDatabase();
+connectToDatabase();
+const rewards = require('./rewards.json');
 
 app.get('/', (req, res) => {
-  res.send(`Hello World! It's me, the server.`);
+  res.send(`Hello! It's me, the server.`);
 });
 
-// app.use('/me', meRoute);
-// app.use('/shop', shopRoute);
-// app.use('/game', gameRoute);
+app.get('/rewards', auth, (req, res) => {
+  res.json({ rewards: rewards });
+});
 
-// app.get('/user/:id', authenticate, async (req, res) => {
-//   const targetUser = await getUserById(req.params.id);
-//   if (!targetUser) return res.status(404);
-
-//   res.json(toPublicUserData(targetUser));
-// });
+app.get('/unlock', auth, async (req, res) => {});
 
 app.listen(process.env.PORT, () => {
   return console.log('💻', 'Server is listening on port', process.env.PORT);
 });
+
+function auth(req, res, next) {
+  // Check url queries for password '534820'
+  const password = req.query.password;
+  if (password !== 534820) {
+    return res.status(401).json({ error: 'Invalid password' });
+  }
+  next();
+}
