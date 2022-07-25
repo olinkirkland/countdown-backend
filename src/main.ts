@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 
 connectToDatabase();
-const rewards = require('./rewards.json');
+const rewards = ['food', 'drink', 'tickets', 'cash'];
 
 app.get('/', (req, res) => {
   res.send(`Hello! It's me, the server.`);
