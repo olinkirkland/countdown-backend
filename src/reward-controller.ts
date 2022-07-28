@@ -42,9 +42,13 @@ export async function unlockNextReward() {
   if (!newNextReward) return null;
 
   newNextReward.availableOnDate = new Date();
-  newNextReward.availableOnDate.setDate(
-    newNextReward.availableOnDate.getDate() + 1
+  // Increment availableOnDate by two minutes
+  newNextReward.availableOnDate.setMinutes(
+    newNextReward.availableOnDate.getMinutes() + 2
   );
+  // newNextReward.availableOnDate.setDate(
+  //   newNextReward.availableOnDate.getDate() + 1
+  // );
 
   await newNextReward.save();
 
