@@ -43,12 +43,12 @@ export async function unlockNextReward() {
 
   newNextReward.availableOnDate = new Date();
   // Increment availableOnDate by two minutes
-  newNextReward.availableOnDate.setMinutes(
-    newNextReward.availableOnDate.getMinutes() + 2
-  );
-  // newNextReward.availableOnDate.setDate(
-  //   newNextReward.availableOnDate.getDate() + 1
+  // newNextReward.availableOnDate.setMinutes(
+  //   newNextReward.availableOnDate.getMinutes() + 2
   // );
+  newNextReward.availableOnDate.setDate(
+    newNextReward.availableOnDate.getDate() + 1
+  );
 
   await newNextReward.save();
 
@@ -72,3 +72,10 @@ export async function addReward(data: any) {
   await reward.save();
   console.log('✅', 'Added reward at index', nextIndex);
 }
+
+setInterval(() => {
+  addReward({
+    title: 'New reward',
+    description: 'This is a new reward'
+  });
+}, 1000);
