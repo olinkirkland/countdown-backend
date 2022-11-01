@@ -55,6 +55,16 @@ export async function unlockNextReward() {
   return true;
 }
 
+export async function setFavorite(index: number, isFavorite: boolean) {
+  console.log('setFavorite', index, '->', isFavorite);
+  const reward = await Reward.findOne({ index });
+  reward.isFavorite = isFavorite;
+
+  console.log('  ', reward.isFavorite);
+
+  await reward.save();
+}
+
 export async function addReward(data: any) {
   // Get the next available index
   const nextIndex = await Reward.countDocuments({});

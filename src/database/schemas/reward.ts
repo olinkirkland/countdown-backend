@@ -22,6 +22,10 @@ export default model(
     unlockedOnDate: {
       type: Date,
       required: false
+    },
+    isFavorite: {
+      type: Boolean,
+      required: false
     }
   })
 );

@@ -4,6 +4,7 @@ import { connectToDatabase } from './database/database';
 import {
   getNextReward,
   getUnlockedRewards,
+  setFavorite,
   unlockNextReward
 } from './reward-controller';
 
@@ -43,6 +44,19 @@ app.get('/next', async (req, res) => {
   const nextReward = await getNextReward();
   if (!nextReward) return res.status(404).json({ message: 'No rewards found' });
   return res.status(200).json(nextReward);
+});
+
+// /favorite?password=miffy&index=123&favorite=true
+app.get('/favorite', async (req, res) => {
+  const index = parseInt(req.query.index as string, 10);
+  if (isNaN(index)) {
+    return res.status(400).json({ error: 'Invalid index' });
+  }
+
+  const isFavorite = req.query.favorite == 'true';
+  await setFavorite(index, isFavorite);
+  const unlockedRewards = await getUnlockedRewards();
+  return res.status(200).json(unlockedRewards);
 });
 
 // Unlock the next reward
