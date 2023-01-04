@@ -7,6 +7,8 @@ export async function getNextReward() {
     index: 1
   });
 
+  if (!lockedRewardWithLowestIndex) return null;
+
   if (lockedRewardWithLowestIndex.availableOnDate)
     return lockedRewardWithLowestIndex;
 
@@ -83,9 +85,9 @@ export async function addReward(data: any) {
   console.log('✅', 'Added reward at index', nextIndex);
 }
 
-// setInterval(() => {
-//   addReward({
-//     title: 'New reward',
-//     description: 'This is a new reward'
-//   });
-// }, 1000);
+setInterval(() => {
+  addReward({
+    title: 'New reward',
+    description: 'This is a new reward'
+  });
+}, 1000);
