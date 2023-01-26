@@ -1,5 +1,7 @@
 A single-purpose website that counts down to when my wife comes back from Houston.
 
+Update 3: Plan out a new update that invites collaboration in a simple and fun way that allows for repetition.
+
 20Wk Update:
 
 // Requests
