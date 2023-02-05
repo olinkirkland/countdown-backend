@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import express from 'express';
+import { prompt } from './ai';
 import { connectToDatabase } from './database/database';
 import {
   getNextReward,
@@ -80,6 +81,41 @@ app.get('/unlock', async (req, res) => {
 app.get('/collection', async (req, res) => {
   const unlockedRewards = await getUnlockedRewards();
   return res.status(200).json(unlockedRewards);
+});
+
+// Fortune
+app.post('/fortune', async (req, res) => {
+  try {
+    const questionsAndCards = req.body;
+
+    const reading = (
+      await prompt(
+        `A person asks a fortune teller for a tarot card reading. The fortune teller asks three questions.` +
+          questionsAndCards.questions
+            .map((question: string, index: number) => {
+              return `\n${index + 1}. ${question}`;
+            })
+            .join('\n') +
+          `\nThen, the person chooses three cards, representing their past, present, and future.` +
+          questionsAndCards.cards
+            .map((card: string, index: number) => {
+              return `\nThe ${
+                index === 0 ? 'past' : index === 1 ? 'present' : 'future'
+              } is ${card}.`;
+            })
+            .join('\n') +
+          `\nWrite a 6-10 sentence monologue from the fortune teller explaining to the person how the cards the person has chosen are related to their answers to the questions.` +
+          `\nEnd the monologue with a prediction for the person's future. Use line breaks. Do not put quotation marks around the monologue.`
+      )
+    ).trim();
+
+    console.log(reading);
+
+    return res.status(200).json(reading);
+  } catch (err) {
+    console.error(err);
+    return res.status(400).json({ error: 'Invalid prompt' });
+  }
 });
 
 app.listen(process.env.PORT, () => {
