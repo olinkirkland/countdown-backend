@@ -2,7 +2,9 @@ import { Configuration, OpenAIApi } from 'openai';
 import { Color, log } from './util/util';
 
 export async function prompt(prompt: string) {
-  log('Waiting for OpenAI...');
+  log('A user submitted a prompt for OpenAI', Color.Cyan);
+  log(prompt);
+  log('Waiting for OpenAI...', Color.Yellow);
   const startingTime = Date.now();
 
   const configuration = new Configuration({
@@ -23,9 +25,6 @@ export async function prompt(prompt: string) {
   });
 
   const result = response.data.choices[0].text;
-  log(
-    `OpenAI response received in ${Date.now() - startingTime}ms`,
-    Color.Green
-  );
+  log(`OpenAI response received in ${Date.now() - startingTime}ms`, Color.Cyan);
   return result;
 }

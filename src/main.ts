@@ -93,25 +93,24 @@ app.post('/fortune', async (req, res) => {
         `A person asks a fortune teller for a tarot card reading. The subject's profile:` +
           questionsAndCards.questions
             .map((question: string, index: number) => {
-              return `\n${index + 1}. ${question}`;
+              return `  ${question}`;
             })
             .join('\n') +
-          `\nThen, the person chooses three cards, representing their past, present, and future.` +
+          `\n\nThen, the person chooses three cards, representing their past, present, and future.\n\n` +
           questionsAndCards.cards
             .map((card: string, index: number) => {
-              return `\nThe ${
-                index === 0 ? 'past' : index === 1 ? 'present' : 'future'
-              } is ${card}.`;
+              return `  ${card}`;
             })
             .join('\n') +
-          `\nWrite a 6-10 sentence monologue from the fortune teller explaining to the person how the cards the person has chosen are related to the subject's profile.` +
-          `\nEnd the monologue with a prediction for the person's future. Use line breaks. Do not put quotation marks around the monologue.`
+          `\n\nWrite a 6-10 sentence monologue from the fortune teller explaining to the person how the cards the person has chosen are related to the subject's profile.` +
+          `\n\nEnd the monologue with a prediction for the person's future. Use line breaks.`
       )
     ).trim();
 
-    console.log(reading);
+    const finalReading = reading.replace(/^"(.+(?="$))"$/, '$1');
+    console.log(finalReading);
 
-    return res.status(200).json(reading);
+    return res.status(200).json(finalReading);
   } catch (err) {
     console.error(err);
     return res.status(400).json({ error: 'Invalid prompt' });
