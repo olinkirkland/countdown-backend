@@ -90,7 +90,7 @@ app.post('/fortune', async (req, res) => {
 
     const reading = (
       await prompt(
-        `A person asks a fortune teller for a tarot card reading. The fortune teller asks three questions, and the person provides an answer to each question.` +
+        `A person asks a fortune teller for a tarot card reading. The subject's profile:` +
           questionsAndCards.questions
             .map((question: string, index: number) => {
               return `\n${index + 1}. ${question}`;
@@ -104,7 +104,7 @@ app.post('/fortune', async (req, res) => {
               } is ${card}.`;
             })
             .join('\n') +
-          `\nWrite a 6-10 sentence monologue from the fortune teller explaining to the person how the cards the person has chosen are related to the three answers they provided earlier.` +
+          `\nWrite a 6-10 sentence monologue from the fortune teller explaining to the person how the cards the person has chosen are related to the subject's profile.` +
           `\nEnd the monologue with a prediction for the person's future. Use line breaks. Do not put quotation marks around the monologue.`
       )
     ).trim();
