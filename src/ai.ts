@@ -17,7 +17,7 @@ export async function prompt(prompt: string) {
     model: 'text-davinci-003',
     prompt: prompt,
     temperature: 0.7,
-    max_tokens: Math.floor(prompt.length * 1.2),
+    max_tokens: 1200,
     top_p: 1,
     stream: false,
     frequency_penalty: 0,

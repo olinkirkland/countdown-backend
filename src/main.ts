@@ -107,7 +107,11 @@ app.post('/fortune', async (req, res) => {
       )
     ).trim();
 
-    const finalReading = reading.replace(/^"(.+(?="$))"$/, '$1');
+    // Remove quotation marks from beginning and end (if they're there)
+    let finalReading = reading;
+    if (finalReading.startsWith('"')) finalReading = finalReading.slice(1);
+    if (finalReading.endsWith('"')) finalReading = finalReading.slice(0, -1);
+
     console.log(finalReading);
 
     return res.status(200).json(finalReading);
