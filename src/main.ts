@@ -83,6 +83,23 @@ app.get('/collection', async (req, res) => {
   return res.status(200).json(unlockedRewards);
 });
 
+// Get the current madlibs story
+// Madlibs story updates every 24 hours after all words have been submitted
+app.get('/madlibs', async (req, res) => {
+
+});
+
+// Submit words for madlibs
+app.post('/madlibs', async (req, res) => {
+  const words = req.body;
+  if (!words) return res.status(400).json({ error: 'No words submitted' });
+  if (!Array.isArray(words))
+    return res.status(400).json({ error: 'Words must be an array' });
+  
+});
+
+
+
 // Fortune
 app.post('/fortune', async (req, res) => {
   try {
