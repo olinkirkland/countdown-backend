@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-main": "nodemon dist/main.js",
     "tsc-w": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "tsc",
+    "dev": "nodemon dist/main.js",
+    "build": "tsc -p .",
     "start": "node dist/main.js"
   },
   "author": "",

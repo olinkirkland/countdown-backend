@@ -25,6 +25,12 @@ app.use((req, res, next) => {
 
 connectToDatabase();
 
+// Log all requests
+app.use((req, res, next) => {
+  console.log(req.query);
+  next();
+});
+
 // Determine if the password is correct
 app.use((req, res, next) => {
   const password = req.query.password;
@@ -83,11 +89,11 @@ app.get('/collection', async (req, res) => {
   return res.status(200).json(unlockedRewards);
 });
 
-// Get the current madlibs story
-// Madlibs story updates every 24 hours after all words have been submitted
-app.get('/madlibs', async (req, res) => {
-
-});
+// // Get the current madlibs story
+// app.get('/madlibs', async (req, res) => {
+//   console.log('Getting madlibs story');
+//   return res.status(200).json(story);
+// });
 
 // Submit words for madlibs
 app.post('/madlibs', async (req, res) => {
@@ -95,10 +101,7 @@ app.post('/madlibs', async (req, res) => {
   if (!words) return res.status(400).json({ error: 'No words submitted' });
   if (!Array.isArray(words))
     return res.status(400).json({ error: 'Words must be an array' });
-  
 });
-
-
 
 // Fortune
 app.post('/fortune', async (req, res) => {
